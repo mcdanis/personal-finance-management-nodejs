@@ -1,9 +1,11 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
+const db = require("../config/config");
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+router.get("/", async (req, res, next) => {
+  const result = await db.query("SELECT * FROM users");
+  res.json(result.rows);
 });
 
 module.exports = router;
