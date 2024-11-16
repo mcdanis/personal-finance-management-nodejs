@@ -1,18 +1,25 @@
-const { Client } = require("pg");
+// config/Database.js
+const { Pool } = require("pg");
 
-// Membuat koneksi ke database PostgreSQL
-const client = new Client({
-  host: "localhost", // Host PostgreSQL (biasanya 'localhost' untuk pengembangan lokal)
-  port: 5432, // Port PostgreSQL, defaultnya adalah 5432
-  user: "mcdani", // Ganti dengan username PostgreSQL yang sesuai
-  password: "dani", // Ganti dengan password PostgreSQL yang sesuai
-  database: "blogger", // Ganti dengan nama database yang sesuai
-});
+class Database {
+  constructor() {
+    this.client = new Pool({
+      host: "localhost",
+      port: 5432,
+      user: "mcdani",
+      password: "dani",
+      database: "personal_finance",
+    });
+  }
 
-// Menyambungkan ke database
-client
-  .connect()
-  .then(() => console.log("Koneksi ke PostgreSQL berhasil!"))
-  .catch((err) => console.error("Gagal menghubungkan ke PostgreSQL:", err));
+  async close() {
+    try {
+      await this.client.end();
+      console.log("Koneksi ke PostgreSQL ditutup.");
+    } catch (err) {
+      console.error("Gagal menutup koneksi:", err);
+    }
+  }
+}
 
-module.exports = client;
+module.exports = Database;

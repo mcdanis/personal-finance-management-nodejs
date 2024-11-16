@@ -1,0 +1,15 @@
+postgres
+    masuk postgres = sudo -u postgres psql
+    use db = \c dbname
+    show tables = \dt
+    beri akses ke db = GRANT ALL PRIVILEGES ON DATABASE personal_finance TO mcdani;
+    beri akses ke tabel = GRANT ALL PRIVILEGES ON TABLE users TO mcdani;
+
+models
+    query di situ semua
+
+controller
+    penghubung models dan service dll, hanya menghubung
+
+service
+    logika berat kompleks
