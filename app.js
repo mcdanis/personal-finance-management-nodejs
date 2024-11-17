@@ -3,11 +3,26 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+const cors = require("cors");
 
 var indexRouter = require("./routes/RouteIndex");
 var usersRouter = require("./routes/RouteUsers");
-
 var app = express();
+
+const allowedOrigins = ["http://localhost:3000", "http://localhost:3003"];
+
+const options = {
+  origin: (origin, callback) => {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: "GET,POST",
+};
+
+app.use(cors(options));
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));

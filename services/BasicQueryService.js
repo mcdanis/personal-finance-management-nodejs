@@ -12,7 +12,9 @@ class BasicQueryService {
   }
 
   selectParam(table, select, valVar, field = "id") {
-    return this.select(table, select) + " WHERE " + field + " = " + valVar;
+    return (
+      this.select(table, select) + " WHERE " + field + " = '" + valVar + "'"
+    );
   }
 
   selectParams(table, select = "*") {
@@ -44,7 +46,6 @@ class BasicQueryService {
 
   async get() {
     const result = await this.db.client.query(this.query);
-    console.log(this.query);
     return result.rows;
   }
 
@@ -53,7 +54,7 @@ class BasicQueryService {
     return result.rows;
   }
 
-  async put(query, value) {
+  async post(query, value) {
     const result = await this.db.client.query(query, value);
     return result.rows[0];
   }
@@ -65,6 +66,21 @@ class BasicQueryService {
     } catch (error) {
       console.error("Error fetching:", error);
       throw error;
+    }
+  }
+
+  async insert(table, columns, data) {
+    try {
+      const columnNames = columns.join(", ");
+      const placeholders = columns
+        .map((_, index) => `$${index + 1}`)
+        .join(", ");
+
+      const query = `INSERT INTO ${table} (${columnNames}) VALUES (${placeholders})`;
+      const result = await this.post(query, data);
+      return result;
+    } catch (err) {
+      throw new Error(`Error inserting data: ${err.message}`);
     }
   }
 }

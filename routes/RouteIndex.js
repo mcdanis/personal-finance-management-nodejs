@@ -3,6 +3,7 @@ const router = express.Router();
 const UserController = require("../controllers/user/UserController");
 const AccountController = require("../controllers/account/AccountController");
 const CategoryController = require("../controllers/category/CategoryController");
+const auth = require("../middlewares/Auth");
 
 const userController = new UserController();
 const accountController = new AccountController();
@@ -11,6 +12,8 @@ const categoryController = new CategoryController();
 // http://localhost:3001/api
 
 // user
+router.use(auth);
+
 router.get("/users", (req, res) => userController.getUsers(req, res));
 router.get("/user/:userId", (req, res) => userController.getUser(req, res));
 router.post("/user", (req, res) => userController.inputUser(req, res));

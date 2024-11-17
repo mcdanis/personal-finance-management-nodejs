@@ -13,3 +13,9 @@ controller
 
 service
     logika berat kompleks
+
+
+route guide
+    transaction
+    report
+    user

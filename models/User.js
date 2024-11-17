@@ -1,5 +1,6 @@
 const Database = require("../config/config");
 const BasicQueryService = require("../services/BasicQueryService");
+const bcrypt = require("bcrypt");
 
 class User extends BasicQueryService {
   constructor() {
@@ -30,6 +31,18 @@ class User extends BasicQueryService {
     }
   }
 
+  async getUserByEmail(email) {
+    try {
+      const result = await this.db.client.query(
+        super.selectParam(this.table, "*", email, "email")
+      );
+      return result.rows;
+    } catch (error) {
+      console.error("Error fetching:", error);
+      throw error;
+    }
+  }
+
   async test() {
     return super
       .selectParams("transactions", "*")
@@ -38,16 +51,12 @@ class User extends BasicQueryService {
       .get();
   }
 
-  async inputUser({ name, email }) {
-    let pass = 123;
-    const user = await this.create({ name, email, pass });
-    return user;
-  }
+  async inputUser({ name, email, pass }) {
+    let password = await bcrypt.hash(pass, 10);
+    const data = [name, email, password];
+    const columns = ["name", "email", "password"];
 
-  create({ name, email, pass }) {
-    const query = `INSERT INTO ${this.table} (id, name, email, password) VALUES ($1, $2, $3, $4)`;
-    const value = [3, name, email, pass];
-    return super.put(query, value);
+    await super.insert(this.table, columns, data);
   }
 }
 

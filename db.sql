@@ -46,12 +46,23 @@ accounts
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,                  -- id pengguna, tipe SERIAL untuk auto increment
-    name VARCHAR(20) NOT NULL,               -- Nama pengguna dengan panjang maksimal 20 karakter
+    name VARCHAR(50) NOT NULL,               -- Nama pengguna dengan panjang maksimal 20 karakter
     email VARCHAR(100) NOT NULL UNIQUE,      -- Email, panjang maksimal 100 karakter, harus unik
-    password VARCHAR NOT NULL,              -- Password pengguna
+    type CHAR(1),              -- 1 user, 0 admin
+    password VARCHAR NOT NULL,              -- type
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- Tanggal pembuatan
-    updated_at TIMESTAMP                    -- Tanggal update, nullable
+    updated_at TIMESTAMP
 );
+-- add column
+ALTER TABLE public.users ADD "type" char NULL DEFAULT '1';
+
+-- supaya id user auto increment
+SELECT setval('users_id_seq', COALESCE((SELECT MAX(id) FROM users), 1), true);
+
+-- grant id user ke user mdani
+GRANT USAGE, SELECT, UPDATE ON SEQUENCE users_id_seq TO mcdani;
+
+
 
 
 CREATE TABLE transactions (

@@ -1,7 +1,22 @@
 class Controller {
-  async handleRequest(res, serviceMethod, params = []) {
+  handleRequest(res, serviceMethod, params = []) {
+    this.mainHandleRequest(res, serviceMethod, params, "get");
+  }
+
+  handleRequestProccess(res, serviceMethod, params = []) {
+    this.mainHandleRequest(res, serviceMethod, params, "post");
+  }
+
+  async mainHandleRequest(res, serviceMethod, params, type) {
     try {
-      const result = await serviceMethod(...params);
+      const query = await serviceMethod(...params);
+      let result = {
+        error: false,
+        message: "successfully",
+      };
+      if (type === "get") {
+        result = query;
+      }
       res.status(200).json(result);
     } catch (error) {
       res.json({
