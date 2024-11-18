@@ -44,15 +44,6 @@ accounts
 - created_at timestamp
 - updated_at timestamp nullable
 
-CREATE TABLE users (
-    id SERIAL PRIMARY KEY,                  -- id pengguna, tipe SERIAL untuk auto increment
-    name VARCHAR(50) NOT NULL,               -- Nama pengguna dengan panjang maksimal 20 karakter
-    email VARCHAR(100) NOT NULL UNIQUE,      -- Email, panjang maksimal 100 karakter, harus unik
-    type CHAR(1),              -- 1 user, 0 admin
-    password VARCHAR NOT NULL,              -- type
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- Tanggal pembuatan
-    updated_at TIMESTAMP
-);
 -- add column
 ALTER TABLE public.users ADD "type" char NULL DEFAULT '1';
 
@@ -63,6 +54,16 @@ SELECT setval('users_id_seq', COALESCE((SELECT MAX(id) FROM users), 1), true);
 GRANT USAGE, SELECT, UPDATE ON SEQUENCE users_id_seq TO mcdani;
 
 
+
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,                  -- id pengguna, tipe SERIAL untuk auto increment
+    name VARCHAR(50) NOT NULL,               -- Nama pengguna dengan panjang maksimal 20 karakter
+    email VARCHAR(100) NOT NULL UNIQUE,      -- Email, panjang maksimal 100 karakter, harus unik
+    type CHAR(1),              -- 1 user, 0 admin
+    password VARCHAR NOT NULL,              -- type
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- Tanggal pembuatan
+    updated_at TIMESTAMP
+);
 
 
 CREATE TABLE transactions (

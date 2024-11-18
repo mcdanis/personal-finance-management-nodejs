@@ -20,6 +20,8 @@ router.get("/account/:accountId", (req, res) =>
   accountController.getAccount(req, res)
 );
 
+router.post("/account", (req, res) => accountController.addAccount(req, res));
+
 // transaction
 router.get("/test", (req, res) => userController.test(req, res));
 

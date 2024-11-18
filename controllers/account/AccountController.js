@@ -16,6 +16,16 @@ class AccountController extends Controller {
     const { accountId } = req.params;
     super.handleRequest(res, this.con.getAccount.bind(this.con), [accountId]);
   }
+
+  async addAccount(req, res) {
+    const { accountName, ballance } = req.body;
+    res.status(200).json({
+      accountName: accountName
+    })
+    // super.handleRequestProccess(res, () =>
+    //   this.user.inputUser({ name, email, pass })
+    // );
+  }
 }
 
 module.exports = AccountController;

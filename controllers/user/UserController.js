@@ -66,7 +66,7 @@ class UserController extends Controller {
 
       // Generate JWT token
       const token = jwt.sign(
-        { userId: user[0].id, email: user[0].email },
+        { userId: user[0].id, email: user[0].email, name: user[0].name },
         process.env.JWT_SECRET,
         {
           expiresIn: "1h", // Token valid selama 1 jam
@@ -96,6 +96,7 @@ class UserController extends Controller {
           message: "Users data fetched successfully",
           userId: decoded.userId,
           email: decoded.email,
+          name: decoded.name,
         });
       }
     );

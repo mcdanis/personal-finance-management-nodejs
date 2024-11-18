@@ -12,11 +12,12 @@ const categoryController = new CategoryController();
 // http://localhost:3001/api
 
 // user
+router.post("/user", (req, res) => userController.inputUser(req, res));
 router.use(auth);
 
 router.get("/users", (req, res) => userController.getUsers(req, res));
 router.get("/user/:userId", (req, res) => userController.getUser(req, res));
-router.post("/user", (req, res) => userController.inputUser(req, res));
+
 
 // account
 router.get("/accounts", (req, res) => accountController.getAccounts(req, res));
