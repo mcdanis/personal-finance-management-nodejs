@@ -29,6 +29,14 @@ class Account extends BasicQueryService {
       throw error;
     }
   }
+
+  async inputAccount({ accountName, ballance }) {
+    let password = await bcrypt.hash(pass, 10);
+    const data = [accountName, ballance];
+    const columns = ["user_id", "name", "ballance", "type"];
+
+    await super.insert(this.table, columns, data);
+  }
 }
 
 module.exports = Account;
