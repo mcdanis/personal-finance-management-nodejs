@@ -30,10 +30,9 @@ class Account extends BasicQueryService {
     }
   }
 
-  async inputAccount({ accountName, ballance }) {
-    let password = await bcrypt.hash(pass, 10);
-    const data = [accountName, ballance];
-    const columns = ["user_id", "name", "ballance", "type"];
+  async inputAccount({ accountName, ballance, type, userId }) {
+    const columns = ["user_id", "name", "balance", "type"];
+    const data = [userId, accountName, ballance, type];
 
     await super.insert(this.table, columns, data);
   }

@@ -19,3 +19,11 @@ route guide
     transaction
     report
     user
+
+    ghp_ZVF----FZFLFe8s------ordRgBfZ
+-----sEaMOF-----80uyA3nU9v7
+
+
+--
+next
+    validasi setiap data di input di fe dan be

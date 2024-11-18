@@ -18,12 +18,9 @@ class AccountController extends Controller {
   }
 
   async addAccount(req, res) {
-    const { accountName, ballance } = req.body;
-    // res.status(200).json({
-    //   accountName: accountName
-    // })
+    const { accountName, ballance, type, userId } = req.body;
     super.handleRequestProccess(res, () =>
-      this.con.inputAccount({ accountName, ballance })
+      this.con.inputAccount({ accountName, ballance, type, userId })
     );
   }
 }
