@@ -23,6 +23,11 @@ class AccountController extends Controller {
       this.con.inputAccount({ accountName, ballance, type, userId })
     );
   }
+
+  getAccounts(req, res) {
+    const { userId } = req.params;
+    super.handleRequest(res, this.con.getAccountUser.bind(this.con), [userId]);
+  }
 }
 
 module.exports = AccountController;

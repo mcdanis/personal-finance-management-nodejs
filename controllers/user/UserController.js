@@ -69,11 +69,16 @@ class UserController extends Controller {
         { userId: user[0].id, email: user[0].email, name: user[0].name },
         process.env.JWT_SECRET,
         {
-          expiresIn: "1h", // Token valid selama 1 jam
+          expiresIn: "7d", // Token valid selama 1 jam
         }
       );
 
-      return res.json({ message: "Login successful", token });
+      return res.json({
+        message: "Login successful",
+        token: token,
+        userId: user[0].id,
+        name: user[0].name,
+      });
     } catch (error) {
       console.error(error);
       return res.status(500).json({ message: "Server error" });

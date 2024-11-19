@@ -10,16 +10,18 @@ const accountController = new AccountController();
 // http://localhost:3001/api-user
 router.post("/login", (req, res) => userController.login(req, res));
 router.use(auth);
+router.post("/user", (req, res) => userController.inputUser(req, res));
 router.get("/user/:userId", (req, res) => userController.getUser(req, res));
 router.get("/auth/current", (req, res) =>
   userController.getUserCurrent(req, res)
 );
-router.post("/user", (req, res) => userController.inputUser(req, res));
 
 router.get("/account/:accountId", (req, res) =>
   accountController.getAccount(req, res)
 );
-
+router.get("/accounts/:userId", (req, res) =>
+  accountController.getAccounts(req, res)
+);
 router.post("/account", (req, res) => accountController.addAccount(req, res));
 
 // transaction

@@ -12,13 +12,14 @@ var app = express();
 const allowedOrigins = ["http://localhost:3000", "http://localhost:3003"];
 
 const options = {
-  origin: (origin, callback) => {
-    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
+  //   origin: (origin, callback) => {
+  //     if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+  //       callback(null, true);
+  //     } else {
+  //       callback(new Error("Not allowed by CORS"));
+  //     }
+  //   },
+  origin: true,
   methods: "GET,POST",
 };
 

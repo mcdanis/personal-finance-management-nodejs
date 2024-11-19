@@ -36,6 +36,18 @@ class Account extends BasicQueryService {
 
     await super.insert(this.table, columns, data);
   }
+
+  async getAccountUser(userId) {
+    try {
+      const result = await this.db.client.query(
+        super.selectParam(this.table, "*", userId, "user_id")
+      );
+      return result.rows;
+    } catch (error) {
+      console.error("Error fetching :", error);
+      throw error;
+    }
+  }
 }
 
 module.exports = Account;
