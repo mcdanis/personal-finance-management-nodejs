@@ -19,7 +19,8 @@ class Controller {
       }
       res.status(200).json(result);
     } catch (error) {
-      res.json({
+      const statusCode = error.statusCode || 500;
+      res.status(statusCode).json({
         error: true,
         message: error.message,
       });

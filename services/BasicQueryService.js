@@ -80,7 +80,10 @@ class BasicQueryService {
       const result = await this.post(query, data);
       return result;
     } catch (err) {
-      throw new Error(`Error inserting data: ${err.message}`);
+      throw {
+        statusCode: 500, // Default ke Internal Server Error
+        message: `Error inserting data: ${err.message}`,
+      };
     }
   }
 }
