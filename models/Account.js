@@ -37,6 +37,10 @@ class Account extends BasicQueryService {
     await super.insert(this.table, columns, data);
   }
 
+  async deleteAccount(accountId) {
+    await super.delete(this.table, "id", accountId);
+  }
+
   async getAccountUser(userId) {
     try {
       const result = await this.db.client.query(

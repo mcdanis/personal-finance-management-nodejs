@@ -54,7 +54,7 @@ class BasicQueryService {
     return result.rows;
   }
 
-  async post(query, value) {
+  async post(query, value = null) {
     const result = await this.db.client.query(query, value);
     return result.rows[0];
   }
@@ -83,6 +83,20 @@ class BasicQueryService {
       throw {
         statusCode: 500, // Default ke Internal Server Error
         message: `Error inserting data: ${err.message}`,
+      };
+    }
+  }
+
+  async delete(table, column, id) {
+    try {
+      const query = `DELETE FROM ${table} WHERE ${column} = '${id}'`;
+      console.log(query);
+      const result = await this.post(query);
+      return result;
+    } catch (err) {
+      throw {
+        statusCode: 500, // Default ke Internal Server Error
+        message: `Error deleting data: ${err.message}`,
       };
     }
   }

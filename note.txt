@@ -26,7 +26,7 @@ route guide
 
 --
 next
-    validasi setiap data di input di fe dan be
+    validasi setiap data di input di be saja, yg di fe biarin saja.
     logout otomatis jika token expire atau cookie expire
     optimasi login dan bagian2 yg bisa di pakai ulang
     perbaiki soal handle response

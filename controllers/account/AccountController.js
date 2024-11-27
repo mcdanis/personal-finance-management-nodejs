@@ -28,6 +28,11 @@ class AccountController extends Controller {
     const { userId } = req.params;
     super.handleRequest(res, this.con.getAccountUser.bind(this.con), [userId]);
   }
+
+  deleteAccount(req, res) {
+    const { accountId } = req.params;
+    super.handleRequestProccess(res, () => this.con.deleteAccount(accountId));
+  }
 }
 
 module.exports = AccountController;
