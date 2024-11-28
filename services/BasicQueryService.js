@@ -64,7 +64,6 @@ class BasicQueryService {
       const result = await this.db.client.query(this.select(table, field));
       return result.rows;
     } catch (error) {
-      console.error("Error fetching:", error);
       throw error;
     }
   }
@@ -72,16 +71,14 @@ class BasicQueryService {
   async insert(table, columns, data) {
     try {
       const columnNames = columns.join(", ");
-      const placeholders = columns
-        .map((_, index) => `$${index + 1}`)
-        .join(", ");
+      const placeholders = this.placeholders(columns);
 
       const query = `INSERT INTO ${table} (${columnNames}) VALUES (${placeholders})`;
       const result = await this.post(query, data);
       return result;
     } catch (err) {
       throw {
-        statusCode: 500, // Default ke Internal Server Error
+        statusCode: 500,
         message: `Error inserting data: ${err.message}`,
       };
     }
@@ -90,7 +87,6 @@ class BasicQueryService {
   async delete(table, column, id) {
     try {
       const query = `DELETE FROM ${table} WHERE ${column} = '${id}'`;
-      console.log(query);
       const result = await this.post(query);
       return result;
     } catch (err) {
@@ -104,9 +100,7 @@ class BasicQueryService {
   async update(table, columns, data, key, accountId) {
     try {
       const columnNames = columns.join(", ");
-      const placeholders = columns
-        .map((_, index) => `$${index + 1}`)
-        .join(", ");
+      const placeholders = this.placeholders(columns);
 
       const query = `UPDATE ${table} SET (${columnNames}) = (${placeholders}) WHERE ${key} = '${accountId}'`;
       const result = await this.post(query, data);
@@ -117,6 +111,12 @@ class BasicQueryService {
         message: `Error inserting data: ${err.message}`,
       };
     }
+  }
+
+  placeholders(columns) {
+    return columns
+      .map((_, index) => `$${index + 1}`)
+      .join(", ");
   }
 }
 

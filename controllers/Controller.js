@@ -12,8 +12,9 @@ class Controller {
       const query = await serviceMethod(...params);
       let result = {
         error: false,
-        message: "successfully",
+        message: "proccess successfully",
       };
+
       if (type === "get") {
         result = query;
       }
