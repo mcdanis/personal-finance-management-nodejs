@@ -33,6 +33,12 @@ class AccountController extends Controller {
     const { accountId } = req.params;
     super.handleRequestProccess(res, () => this.con.deleteAccount(accountId));
   }
+
+  updateAccount(req, res) {
+    const { accountId } = req.params;
+    const { accountName, ballance, type, userId } = req.body;
+    super.handleRequestProccess(res, () => this.con.updateAccount(accountId, 'id', { accountName, ballance, type, userId }));
+  }
 }
 
 module.exports = AccountController;

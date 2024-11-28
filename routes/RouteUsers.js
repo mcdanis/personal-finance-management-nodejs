@@ -19,6 +19,9 @@ router.get("/auth/current", (req, res) =>
 router.get("/account/:accountId", (req, res) =>
   accountController.getAccount(req, res)
 );
+router.put("/account/:accountId", (req, res) =>
+  accountController.updateAccount(req, res)
+);
 router.delete("/account/:accountId", (req, res) =>
   accountController.deleteAccount(req, res)
 );

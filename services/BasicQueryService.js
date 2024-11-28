@@ -95,8 +95,26 @@ class BasicQueryService {
       return result;
     } catch (err) {
       throw {
-        statusCode: 500, // Default ke Internal Server Error
+        statusCode: 500,
         message: `Error deleting data: ${err.message}`,
+      };
+    }
+  }
+
+  async update(table, columns, data, key, accountId) {
+    try {
+      const columnNames = columns.join(", ");
+      const placeholders = columns
+        .map((_, index) => `$${index + 1}`)
+        .join(", ");
+
+      const query = `UPDATE ${table} SET (${columnNames}) = (${placeholders}) WHERE ${key} = '${accountId}'`;
+      const result = await this.post(query, data);
+      return result;
+    } catch (err) {
+      throw {
+        statusCode: 500,
+        message: `Error inserting data: ${err.message}`,
       };
     }
   }

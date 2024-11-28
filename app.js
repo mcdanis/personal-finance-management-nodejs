@@ -20,7 +20,7 @@ const options = {
   //     }
   //   },
   origin: true,
-  methods: "GET,POST,DELETE",
+  methods: "GET,POST,DELETE,PUT",
 };
 
 app.use(cors(options));

@@ -52,6 +52,13 @@ class Account extends BasicQueryService {
       throw error;
     }
   }
+
+  async updateAccount(accountId, key, { accountName, ballance, type, userId }) {
+    const columns = ["name", "balance", "type"];
+    const data = [accountName, ballance, type];
+
+    await super.update(this.table, columns, data, key, accountId);
+  }
 }
 
 module.exports = Account;
