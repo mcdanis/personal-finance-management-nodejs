@@ -99,11 +99,16 @@ class BasicQueryService {
 
   async update(table, columns, data, key, accountId) {
     try {
-      const columnNames = columns.join(", ");
       const placeholders = this.placeholders(columns);
 
-      const query = `UPDATE ${table} SET (${columnNames}) = (${placeholders}) WHERE ${key} = '${accountId}'`;
+      const columnAssignments =
+        columns.length === 1
+          ? `${columns[0]} = ${placeholders}`
+          : `(${columns.join(", ")}) = (${placeholders})`;
+
+      const query = `UPDATE ${table} SET ${columnAssignments} WHERE ${key} = '${accountId}'`;
       const result = await this.post(query, data);
+
       return result;
     } catch (err) {
       throw {
@@ -114,9 +119,7 @@ class BasicQueryService {
   }
 
   placeholders(columns) {
-    return columns
-      .map((_, index) => `$${index + 1}`)
-      .join(", ");
+    return columns.map((_, index) => `$${index + 1}`).join(", ");
   }
 }
 
