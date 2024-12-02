@@ -23,6 +23,36 @@ class Category extends BasicQueryService {
       throw error;
     }
   }
+
+  async inputCategory({ category, userId }) {
+    const columns = ["name", "user_id"];
+    const data = [category, userId];
+
+    await super.insert(this.table, columns, data);
+  }
+
+  async getCategoryByUser(userId) {
+    try {
+      const result = await this.db.client.query(
+        super.selectParam(this.table, "*", userId, "user_id")
+      );
+      return result.rows;
+    } catch (error) {
+      console.error("Error fetching :", error);
+      throw error;
+    }
+  }
+
+  async deleteCategory(categoryId) {
+    return await super.delete(this.table, "id", categoryId);
+  }
+
+  async updateCategory(categoryId, key, { category }) {
+    const columns = ["name"];
+    const data = [category];
+
+    await super.update(this.table, columns, data, key, categoryId);
+  }
 }
 
 module.exports = Category;

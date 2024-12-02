@@ -2,6 +2,7 @@ const Database = require("../config/config");
 const BasicQueryService = require("../services/BasicQueryService");
 
 class Account extends BasicQueryService {
+
   constructor() {
     super();
     this.db = new Database();
