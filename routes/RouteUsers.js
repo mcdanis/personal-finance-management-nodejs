@@ -5,12 +5,14 @@ const UserController = require("../controllers/user/UserController");
 const AccountController = require("../controllers/account/AccountController");
 const CategoryController = require("../controllers/category/CategoryController");
 const SubCategoryController = require("../controllers/category/SubCategoryController");
+const ExpenditureController = require("../controllers/transaction/ExpenditureController");
 const auth = require("../middlewares/Auth");
 
 const userController = new UserController();
 const accountController = new AccountController();
 const categoryController = new CategoryController();
 const subCategoryController = new SubCategoryController();
+const expenditureController = new ExpenditureController();
 
 // http://localhost:3001/api-user
 router.post("/login", (req, res) => userController.login(req, res));
@@ -74,6 +76,9 @@ router.put("/sub-category/:subCategoryId", (req, res) =>
 );
 
 // transaction
+router.post("/expenditure", (req, res) =>
+  expenditureController.addExpenditure(req, res)
+);
 router.get("/test", (req, res) => userController.test(req, res));
 
 module.exports = router;
