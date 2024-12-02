@@ -63,6 +63,16 @@ router.get("/sub-categories/:userId", (req, res) =>
 router.post("/sub-category", (req, res) =>
   subCategoryController.addSubCategory(req, res)
 );
+router.get("/sub-category/:subCategoryId", (req, res) =>
+  subCategoryController.getSubCategory(req, res)
+);
+router.delete("/sub-category/:subCategoryId", (req, res) =>
+  subCategoryController.deleteSubCategory(req, res)
+);
+router.put("/sub-category/:subCategoryId", (req, res) =>
+  subCategoryController.updateSubCategory(req, res)
+);
+
 // transaction
 router.get("/test", (req, res) => userController.test(req, res));
 

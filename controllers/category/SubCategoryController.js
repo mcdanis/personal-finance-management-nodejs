@@ -19,17 +19,33 @@ class CategoryController extends Controller {
     ]);
   }
 
-  //   getCategory(req, res) {
-  //     const { categoryId } = req.params;
-  //     super.handleRequest(res, this.model.getCategory.bind(this.model), [
-  //       categoryId,
-  //     ]);
-  //   }
+  getSubCategory(req, res) {
+    const { subCategoryId } = req.params;
+    super.handleRequest(res, this.model.getSubCategory.bind(this.model), [
+      subCategoryId,
+    ]);
+  }
 
   async addSubCategory(req, res) {
     const { categoryId, userId, name } = req.body;
     super.handleRequestProccess(res, () =>
       this.model.inputSubCategory({ categoryId, name, userId })
+    );
+  }
+
+  async deleteSubCategory(req, res) {
+    const { subCategoryId } = req.params;
+    super.handleRequestProccess(res, () =>
+      this.model.deleteSubCategory(subCategoryId)
+    );
+  }
+
+  async updateSubCategory(req, res) {
+    const { subCategoryId } = req.params;
+    const { categoryId } = req.body;
+    const { name } = req.body;
+    super.handleRequestProccess(res, () =>
+      this.model.updateSubCategory(subCategoryId, "id", { categoryId, name })
     );
   }
 }

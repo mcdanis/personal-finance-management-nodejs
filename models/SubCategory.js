@@ -12,17 +12,17 @@ class Category extends BasicQueryService {
   //     return super.getDatas(this.table, "*");
   //   }
 
-  //   async getCategory(id) {
-  //     try {
-  //       const result = await this.db.client.query(
-  //         super.selectParam(this.table, "*", id)
-  //       );
-  //       return result.rows;
-  //     } catch (error) {
-  //       console.error("Error fetching :", error);
-  //       throw error;
-  //     }
-  //   }
+  async getSubCategory(id) {
+    try {
+      const result = await this.db.client.query(
+        super.selectParam(this.table, "*", id)
+      );
+      return result.rows;
+    } catch (error) {
+      console.error("Error fetching :", error);
+      throw error;
+    }
+  }
 
   async inputSubCategory({ categoryId, name, userId }) {
     const columns = ["name", "user_id", "category_id"];
@@ -34,7 +34,10 @@ class Category extends BasicQueryService {
   async getSubCategoryByUser(userId) {
     try {
       const result = await this.db.client.query(
-        super.selectParam(this.table, "*", userId, "user_id")
+        `
+          SELECT ${this.table}.id, ${this.table}.name,${this.table}.category_id, categories.name as category_name FROM 
+          ${this.table} join categories on ${this.table}.category_id = categories.id
+        `
       );
       return result.rows;
     } catch (error) {
@@ -42,6 +45,18 @@ class Category extends BasicQueryService {
       throw error;
     }
   }
+
+  async deleteSubCategory(categoryId) {
+    return await super.delete(this.table, "id", categoryId);
+  }
+
+  async updateSubCategory(subCategoryId, key, { categoryId, name }) {
+    const columns = ["name", "category_id"];
+    const data = [name, categoryId];
+
+    await super.update(this.table, columns, data, key, subCategoryId);
+  }
+
 }
 
 module.exports = Category;
