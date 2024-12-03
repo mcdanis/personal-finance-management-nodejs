@@ -1,6 +1,6 @@
 const Database = require("../../config/config");
 const Transaction = require("./Transaction");
-const BasicQueryService = require("../services/BasicQueryService");
+const BasicQueryService = require("../../services/BasicQueryService");
 
 class Expenditure extends BasicQueryService {
   constructor() {

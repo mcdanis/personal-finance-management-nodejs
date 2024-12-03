@@ -3,6 +3,7 @@ const Controller = require("../Controller");
 
 class ExpenditureController extends Controller {
   constructor() {
+    super();
     this.model = new Expenditure();
   }
 
