@@ -79,6 +79,15 @@ router.put("/sub-category/:subCategoryId", (req, res) =>
 router.post("/expenditure", (req, res) =>
   expenditureController.addExpenditure(req, res)
 );
+router.get("/expenditure/:userId/:timeFrame", (req, res) =>
+  expenditureController.getExpenditure(req, res)
+);
+// router.get("/expenditure/:userId", (req, res) => {
+//   const { userId } = req.params;
+
+//   res.status(200).json(userId);
+// });
+
 router.get("/test", (req, res) => userController.test(req, res));
 
 module.exports = router;

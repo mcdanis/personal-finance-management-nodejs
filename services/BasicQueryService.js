@@ -113,7 +113,7 @@ class BasicQueryService {
     } catch (err) {
       throw {
         statusCode: 500,
-        message: `Error inserting data: ${err.message}`,
+        message: `Error updating data: ${err.message}`,
       };
     }
   }
