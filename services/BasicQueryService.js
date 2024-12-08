@@ -1,4 +1,5 @@
 const Database = require("../config/config");
+const QueryBuilder = require("./utilities/QueryBuilder");
 
 class BasicQueryService {
   constructor() {
@@ -120,6 +121,33 @@ class BasicQueryService {
 
   placeholders(columns) {
     return columns.map((_, index) => `$${index + 1}`).join(", ");
+  }
+
+  transactionQuery(table, userId, timeFrame, type) {
+    let query = QueryBuilder.table(this.table);
+    if (type == "e") {
+      query
+        .join(
+          "sub_categories",
+          "sub_categories.id",
+          "=",
+          `CAST(${this.table}.sub_category AS INTEGER)`
+        )
+        .select(
+          `${table}.*`,
+          "accounts.name as account_name",
+          "sub_categories.name as sub_category_name"
+        );
+    } else {
+      query.select(`${table}.*`, "accounts.name as account_name");
+    }
+
+    return query
+      .join("accounts", "accounts.id", "=", `${table}.account_id`)
+      .where(`${table}.user_id`, "=", userId)
+      .where(`${table}.date`, "=", timeFrame)
+      .where(`${table}.type`, "=", type)
+      .get();
   }
 }
 

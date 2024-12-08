@@ -6,6 +6,7 @@ const AccountController = require("../controllers/account/AccountController");
 const CategoryController = require("../controllers/category/CategoryController");
 const SubCategoryController = require("../controllers/category/SubCategoryController");
 const ExpenditureController = require("../controllers/transaction/ExpenditureController");
+const IncomeController = require("../controllers/transaction/IncomeController");
 const auth = require("../middlewares/Auth");
 
 const userController = new UserController();
@@ -13,6 +14,7 @@ const accountController = new AccountController();
 const categoryController = new CategoryController();
 const subCategoryController = new SubCategoryController();
 const expenditureController = new ExpenditureController();
+const incomeController = new IncomeController();
 
 // http://localhost:3001/api-user
 router.post("/login", (req, res) => userController.login(req, res));
@@ -75,13 +77,19 @@ router.put("/sub-category/:subCategoryId", (req, res) =>
   subCategoryController.updateSubCategory(req, res)
 );
 
-// transaction
+// transaction expenditure
 router.post("/expenditure", (req, res) =>
   expenditureController.addExpenditure(req, res)
 );
 router.get("/expenditure/:userId/:timeFrame", (req, res) =>
   expenditureController.getExpenditure(req, res)
 );
+// transaction income
+router.post("/income", (req, res) => incomeController.addIncome(req, res));
+router.get("/income/:userId/:timeFrame", (req, res) =>
+  incomeController.getIncome(req, res)
+);
+
 // router.get("/expenditure/:userId", (req, res) => {
 //   const { userId } = req.params;
 
